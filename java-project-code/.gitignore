@@ -1,0 +1,8 @@
+.vscode/
+*~
+.#*
+*#
+target
+bin
+.DS_Store
+
