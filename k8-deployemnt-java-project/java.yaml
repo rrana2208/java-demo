@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-demo
-          image: java/test
+          image: 521092179643.dkr.ecr.us-east-1.amazonaws.com/rrana:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
