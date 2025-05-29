@@ -13,10 +13,12 @@ spec:
       labels:
         app: springboot-k8s-demo
     spec:
+      imagePullSecrets:
+        - name: ecr-creds
       containers:
         - name: springboot-k8s-demo
           image: 521092179643.dkr.ecr.us-east-1.amazonaws.com/rrana:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -31,4 +33,4 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-  type: ClusterIP
+  type: NodePort
