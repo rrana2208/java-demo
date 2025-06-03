@@ -11,8 +11,7 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-		return "This is first Monday commint on June2. with correction";
-		return "This is first TUe commint on June3. with correction";
+		return "Jun3-2025";
 	}
 
 	public static void main(String[] args) {
