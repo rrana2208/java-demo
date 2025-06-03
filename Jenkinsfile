@@ -15,14 +15,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main',
-                    credentialsId: "${params.GITHUB_CREDENTIALS_ID}",
-                    url: "${params.GIT_REPO_URL}"
-            }
-        }
-
         stage('Build JAR') {
             steps {
                 dir('java-project-code/complete') {
