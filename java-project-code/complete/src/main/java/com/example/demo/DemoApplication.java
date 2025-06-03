@@ -12,6 +12,7 @@ public class DemoApplication {
 	@GetMapping("/")
 	public String home() {
 		return "This is first Monday commint on June2. with correction";
+		return "This is first TUe commint on June3. with correction";
 	}
 
 	public static void main(String[] args) {
