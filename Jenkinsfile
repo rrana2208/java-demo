@@ -118,6 +118,20 @@ pipeline {
     }
 
     post {
+        always {
+                emailext(
+                to: 'always@foo.com',
+                recipientProviders: [previous()],
+                subject: "Build ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                <p><strong>Build Status:</strong> ${buildStatus}</p>
+                <p><strong>Project:</strong> ${env.JOB_NAME}</p>
+                <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
+                <p><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                """,
+                mimeType: 'text/html'
+                       )
+               }
         success {
             echo "✅ Pipeline completed and deployed: ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
         }
