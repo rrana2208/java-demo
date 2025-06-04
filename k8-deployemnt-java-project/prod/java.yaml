@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-k8s-demo
+  namespace: java-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-k8s-demo
+  template:
+    metadata:
+      labels:
+        app: springboot-k8s-demo
+    spec:
+      imagePullSecrets:
+        - name: ecr-creds
+      containers:
+        - name: springboot-k8s-demo
+          image: 521092179643.dkr.ecr.us-east-1.amazonaws.com/rrana:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-k8s-service
+  namespace: java-prod
+spec:
+  selector:
+    app: springboot-k8s-demo
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: NodePort
