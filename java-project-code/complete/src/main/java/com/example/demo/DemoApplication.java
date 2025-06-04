@@ -11,7 +11,7 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-		return "Hi this is my Prod application.";
+		return "Hi this is my dev application.";
 	}
 
 	public static void main(String[] args) {
