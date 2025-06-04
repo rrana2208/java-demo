@@ -4,7 +4,7 @@ metadata:
   name: springboot-k8s-demo
   namespace: java-test
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: springboot-k8s-demo

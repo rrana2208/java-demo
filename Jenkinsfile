@@ -70,7 +70,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sed -i 's|image: .*|image: ${env.IMAGE_NAME}:${env.IMAGE_TAG}|' k8-deployemnt-java-project/java.yaml
+                        sed -i 's|image: .*|image: ${env.IMAGE_NAME}:${env.IMAGE_TAG}|' k8-deployemnt-java-project/*/java.yaml
                     """
                 }
             }
