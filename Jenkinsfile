@@ -10,8 +10,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "${params.ECR_REGISTRY_ID}.dkr.ecr.${params.AWS_REGION}.amazonaws.com/${params.ECR_REPOSITORY_NAME}"
-        IMAGE_TAG = "${BUILD_NUMBER}"
+        IMAGE_TAG = "${BUILD_NUMBER}" // ✅ moved IMAGE_NAME to be set dynamically in script
     }
 
     stages {
@@ -38,6 +37,13 @@ pipeline {
                     string(credentialsId: 'aws-session-token', variable: 'AWS_SESSION_TOKEN') // optional
                 ]) {
                     script {
+                        // ✅ Dynamically set ECR repo based on branch
+                        def repoName = 'java-test'
+                        if (env.BRANCH_NAME == 'main') {
+                            repoName = 'java-prod'
+                        }
+                        env.IMAGE_NAME = "${params.ECR_REGISTRY_ID}.dkr.ecr.${params.AWS_REGION}.amazonaws.com/${repoName}"
+
                         def ecrLoginScript = """
                             set -e
                             echo "🔐 Logging in to ECR..."
@@ -95,10 +101,10 @@ pipeline {
                         def namespace = 'java-test' // default namespace
                         if (env.BRANCH_NAME == 'main') {
                             namespace = 'java-prod'
-			    manifestFolder = 'k8-deployemnt-java-project/prod'
+                            manifestFolder = 'k8-deployemnt-java-project/prod'
                         } else if (env.BRANCH_NAME == 'dev') {
                             namespace = 'java-test'
-			    manifestFolder = 'k8-deployemnt-java-project/dev'
+                            manifestFolder = 'k8-deployemnt-java-project/dev'
                         } else {
                             echo "Branch '${env.BRANCH_NAME}' detected - deploying to namespace '${namespace}'"
                         }
@@ -154,3 +160,4 @@ pipeline {
         }
     }
 }
+
