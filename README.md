@@ -1,4 +1,2 @@
-
-# java-demo
-This is a test poeject in java which is used to demo the CI / CD pipelne.
-
+Java-demo project dev branch
+it is used to test the new feature and new code addition.
