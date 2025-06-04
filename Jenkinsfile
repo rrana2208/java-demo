@@ -95,8 +95,10 @@ pipeline {
                         def namespace = 'java-test' // default namespace
                         if (env.BRANCH_NAME == 'main') {
                             namespace = 'java-prod'
+			    manifestFolder = 'k8-deployemnt-java-project/prod'
                         } else if (env.BRANCH_NAME == 'dev') {
                             namespace = 'java-test'
+			    manifestFolder = 'k8-deployemnt-java-project/dev'
                         } else {
                             echo "Branch '${env.BRANCH_NAME}' detected - deploying to namespace '${namespace}'"
                         }
@@ -116,8 +118,8 @@ pipeline {
                               --docker-email=you@example.com \\
                               -n ${namespace} --dry-run=client -o yaml | kubectl apply -f - --kubeconfig=\$KUBECONFIG
 
-                            echo "🚀 Deploying to Kubernetes namespace '${namespace}'..."
-                            kubectl apply -n ${namespace} -f k8-deployemnt-java-project/ --kubeconfig=\$KUBECONFIG
+                            echo "🚀 Deploying to Kubernetes namespace '${namespace}' using mainfest folder"
+                            kubectl apply -n ${namespace} -f ${manifestFolder} --kubeconfig=\$KUBECONFIG
                         """
                         sh updateSecretAndDeploy
                     }
