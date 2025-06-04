@@ -11,13 +11,12 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-		return  """
-			Hi this is my dev application.
-			Version is: v1.0.1
-			Status: Running
-			Feature: 1
-                        Env: Development
-		        """;
+               return  "Hi this is my dev application.\n"
+         	    + "Version is: v1.0.1\n"
+         	    + "Status: Running\n"
+         	    + "Feature: 1\n"
+         	    + "Env: Development";
+
 	}
 
 	public static void main(String[] args) {
