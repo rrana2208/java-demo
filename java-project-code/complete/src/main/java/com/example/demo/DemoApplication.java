@@ -11,7 +11,7 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-		return "Jun3-2025-edit1";
+		return "Hi this is my Prod application.";
 	}
 
 	public static void main(String[] args) {
