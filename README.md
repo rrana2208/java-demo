@@ -1,4 +1,6 @@
+#Java demo project
 
-# java-demo
-This is a test poeject in java which is used to demo the CI / CD pipelne.
+This is the good code for prod.
+Date: 4th Jun.
 
+If anything goes wrong swtich back to this commit
