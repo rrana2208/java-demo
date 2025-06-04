@@ -92,9 +92,18 @@ pipeline {
                     string(credentialsId: 'aws-session-token', variable: 'AWS_SESSION_TOKEN') // optional
                 ]) {
                     script {
+                        def namespace = 'java-test' // default namespace
+                        if (env.BRANCH_NAME == 'main') {
+                            namespace = 'java-prod'
+                        } else if (env.BRANCH_NAME == 'dev') {
+                            namespace = 'java-test'
+                        } else {
+                            echo "Branch '${env.BRANCH_NAME}' detected - deploying to namespace '${namespace}'"
+                        }
+
                         def updateSecretAndDeploy = """
                             set -e
-                            echo "🔐 Refreshing ECR imagePullSecret in namespace 'java-test'..."
+                            echo "🔐 Refreshing ECR imagePullSecret in namespace '${namespace}'..."
                             export AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}
                             export AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}
                             ${env.AWS_SESSION_TOKEN ? "export AWS_SESSION_TOKEN=${env.AWS_SESSION_TOKEN}" : ""}
@@ -105,10 +114,10 @@ pipeline {
                               --docker-username=AWS \\
                               --docker-password="\$PASSWORD" \\
                               --docker-email=you@example.com \\
-                              -n java-test --dry-run=client -o yaml | kubectl apply -f - --kubeconfig=\$KUBECONFIG
+                              -n ${namespace} --dry-run=client -o yaml | kubectl apply -f - --kubeconfig=\$KUBECONFIG
 
-                            echo "🚀 Deploying to Kubernetes..."
-                            kubectl apply -n java-test -f k8-deployemnt-java-project/ --kubeconfig=\$KUBECONFIG
+                            echo "🚀 Deploying to Kubernetes namespace '${namespace}'..."
+                            kubectl apply -n ${namespace} -f k8-deployemnt-java-project/ --kubeconfig=\$KUBECONFIG
                         """
                         sh updateSecretAndDeploy
                     }
@@ -143,4 +152,3 @@ pipeline {
         }
     }
 }
-
