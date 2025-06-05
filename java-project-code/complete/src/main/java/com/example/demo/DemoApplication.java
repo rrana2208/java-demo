@@ -11,7 +11,7 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-               return  "DEV PLATFORM"
+               return  "DEV PLATFORM";
 
 	}
 
