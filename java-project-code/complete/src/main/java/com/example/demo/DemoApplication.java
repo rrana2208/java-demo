@@ -11,11 +11,7 @@ public class DemoApplication {
 
 	@GetMapping("/")
 	public String home() {
-               return  "Hi this is my dev application.\n"
-         	    + "Version is: v1.0.1\n"
-         	    + "Status: Running\n"
-         	    + "Feature: 1\n"
-         	    + "Env: Development";
+               return  "DEV PLATFORM"
 
 	}
 
